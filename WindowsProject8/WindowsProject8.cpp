@@ -72,8 +72,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 BOOL CALLBACK DlgProc(HWND hWnd, UINT message, WPARAM wp, LPARAM lp) {
 
     TCHAR str[100];
-    int Answers[9];
-    static int Order = 0;
+    int Answers[9]; //хранит ответы для проверки результата
+    static bool IfClicked[9]{0}; //проверяет есть ли уже на этом месте крестик или нолик
+    static int Order = 0; //определяет показать крестик или нолик
     switch (message)
     {
     case WM_CLOSE:
@@ -92,105 +93,26 @@ BOOL CALLBACK DlgProc(HWND hWnd, UINT message, WPARAM wp, LPARAM lp) {
         return TRUE;
 
     case WM_COMMAND: {
-        if (LOWORD(wp) == IDC_BUTTON1)
-        {
-            if (Order == 0) {
-                SendMessage(hPic[0], STM_SETIMAGE, WPARAM(IMAGE_BITMAP), LPARAM(hBmp[0]));
-                Order = 1;
-            }
-            else {
-                SendMessage(hPic[0], STM_SETIMAGE, WPARAM(IMAGE_BITMAP), LPARAM(hBmp[1]));
-                Order = 0;
-            }
-        }
-        if (LOWORD(wp) == IDC_BUTTON2)
-        {
-            if (Order == 0) {
-                SendMessage(hPic[1], STM_SETIMAGE, WPARAM(IMAGE_BITMAP), LPARAM(hBmp[0]));
-                Order = 1;
-            }
-            else {
-                SendMessage(hPic[1], STM_SETIMAGE, WPARAM(IMAGE_BITMAP), LPARAM(hBmp[1]));
-                Order = 0;
+        if (LOWORD(wp)) {
+            for (int i = 0; i < 9; i++) {
+                if (LOWORD(wp) == IDC_BUTTON1+i)
+                {
+                    if (IfClicked[i]==0) {
+                        if (Order == 0) {
+                            SendMessage(hPic[i], STM_SETIMAGE, WPARAM(IMAGE_BITMAP), LPARAM(hBmp[0]));
+                            Order = 1;
+                            IfClicked[i] = 1;
+                        }
+                        else {
+                            SendMessage(hPic[i], STM_SETIMAGE, WPARAM(IMAGE_BITMAP), LPARAM(hBmp[1]));
+                            Order = 0;
+                            IfClicked[i] = 1;
+                        }
+                   }
+                }
             }
         }
-        if (LOWORD(wp) == IDC_BUTTON3)
-        {
-            if (Order == 0) {
-                SendMessage(hPic[2], STM_SETIMAGE, WPARAM(IMAGE_BITMAP), LPARAM(hBmp[0]));
-                Order = 1;
-            }
-            else {
-                SendMessage(hPic[2], STM_SETIMAGE, WPARAM(IMAGE_BITMAP), LPARAM(hBmp[1]));
-                Order = 0;
-            }
-        }
-        if (LOWORD(wp) == IDC_BUTTON4)
-        {
-            if (Order == 0) {
-                SendMessage(hPic[3], STM_SETIMAGE, WPARAM(IMAGE_BITMAP), LPARAM(hBmp[0]));
-                Order = 1;
-            }
-            else {
-                SendMessage(hPic[3], STM_SETIMAGE, WPARAM(IMAGE_BITMAP), LPARAM(hBmp[1]));
-                Order = 0;
-            }
-        }
-        if (LOWORD(wp) == IDC_BUTTON5)
-        {
-            if (Order == 0) {
-                SendMessage(hPic[4], STM_SETIMAGE, WPARAM(IMAGE_BITMAP), LPARAM(hBmp[0]));
-                Order = 1;
-            }
-            else {
-                SendMessage(hPic[4], STM_SETIMAGE, WPARAM(IMAGE_BITMAP), LPARAM(hBmp[1]));
-                Order = 0;
-            }
-        }
-        if (LOWORD(wp) == IDC_BUTTON6)
-        {
-            if (Order == 0) {
-                SendMessage(hPic[5], STM_SETIMAGE, WPARAM(IMAGE_BITMAP), LPARAM(hBmp[0]));
-                Order = 1;
-            }
-            else {
-                SendMessage(hPic[5], STM_SETIMAGE, WPARAM(IMAGE_BITMAP), LPARAM(hBmp[1]));
-                Order = 0;
-            }
-        }
-        if (LOWORD(wp) == IDC_BUTTON7)
-        {
-            if (Order == 0) {
-                SendMessage(hPic[6], STM_SETIMAGE, WPARAM(IMAGE_BITMAP), LPARAM(hBmp[0]));
-                Order = 1;
-            }
-            else {
-                SendMessage(hPic[6], STM_SETIMAGE, WPARAM(IMAGE_BITMAP), LPARAM(hBmp[1]));
-                Order = 0;
-            }
-        }
-        if (LOWORD(wp) == IDC_BUTTON8)
-        {
-            if (Order == 0) {
-                SendMessage(hPic[7], STM_SETIMAGE, WPARAM(IMAGE_BITMAP), LPARAM(hBmp[0]));
-                Order = 1;
-            }
-            else {
-                SendMessage(hPic[7], STM_SETIMAGE, WPARAM(IMAGE_BITMAP), LPARAM(hBmp[1]));
-                Order = 0;
-            }
-        }
-        if (LOWORD(wp) == IDC_BUTTON9)
-        {
-            if (Order == 0) {
-                SendMessage(hPic[8], STM_SETIMAGE, WPARAM(IMAGE_BITMAP), LPARAM(hBmp[0]));
-                Order = 1;
-            }
-            else {
-                SendMessage(hPic[8], STM_SETIMAGE, WPARAM(IMAGE_BITMAP), LPARAM(hBmp[1]));
-                Order = 0;
-            }
-        }
+        
     }
     return TRUE;
     }
