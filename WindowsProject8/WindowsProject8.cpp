@@ -38,9 +38,6 @@ BOOL CALLBACK DlgProc(HWND hWnd, UINT message, WPARAM wp, LPARAM lp) {
 
     case  WM_INITDIALOG:
         for (int i = 0; i < MapSize; i++) {
-            hClick[i] = GetDlgItem(hWnd, IDC_BUTTON1+i);
-        }
-        for (int i = 0; i < MapSize; i++) {
             hPic[i] = GetDlgItem(hWnd, IDC_STATIC1 + i);
         }
         hBmp[0] = LoadBitmap(GetModuleHandle(NULL), MAKEINTRESOURCE(IDB_BITMAP1)); //Х
