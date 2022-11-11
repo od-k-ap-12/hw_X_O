@@ -26,8 +26,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 
 BOOL CALLBACK DlgProc(HWND hWnd, UINT message, WPARAM wp, LPARAM lp) {
-    int MapSize = 3 * 3;
-    int Answer[9]{9}; //хранит ответы для проверки результата
+    const int MapSize = 3 * 3;
+    int Answer[MapSize]{9}; //хранит ответы для проверки результата
     static bool IfClicked[9]{0}; //проверяет есть ли уже на этом месте крестик или нолик
     static int Order = 0; //определяет показать крестик или нолик
     switch (message)
